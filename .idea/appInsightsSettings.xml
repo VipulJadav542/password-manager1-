@@ -8,8 +8,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.rk.mynote" />
-                  <option name="mobileSdkAppId" value="1:131408990813:android:4602e98d6c7224195df3b4" />
+                  <option name="appId" value="com.rk.PasswordManager" />
+                  <option name="mobileSdkAppId" value="1:131408990813:android:8f3fb7d5cfa2377f5df3b4" />
                   <option name="projectId" value="fir-e643c" />
                   <option name="projectNumber" value="131408990813" />
                 </ConnectionSetting>

@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.rk.mynote"
+    namespace = "com.rk.PasswordManager"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.rk.mynote"
+        applicationId = "com.rk.PasswordManager"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -91,6 +91,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended.v100rc01)
 
     implementation(libs.androidx.core.ktx)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

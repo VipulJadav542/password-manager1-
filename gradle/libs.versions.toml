@@ -31,6 +31,7 @@ runtimeLivedata = "1.8.2"
 runtimeLivedataVersion = "1.6.5"
 googleServices = "4.4.1"
 firebaseAuth = "22.3.1"
+foundationDesktop = "1.6.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -75,6 +76,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-v2110 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-foundation-desktop = { group = "androidx.compose.foundation", name = "foundation-desktop", version.ref = "foundationDesktop" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
