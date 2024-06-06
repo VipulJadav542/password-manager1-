@@ -31,8 +31,6 @@ fun BottomSheetContent(viewModel: AccountViewModel, current: ActivityResultRegis
     var password by rememberSaveable { mutableStateOf(viewModel.password) }
     val isButtonEnabled = account.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()
 
-
-    var maxInputLength by remember { mutableStateOf(10) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,9 +120,6 @@ fun BottomSheetContent(viewModel: AccountViewModel, current: ActivityResultRegis
                     account = ""
                     username = ""
                     password = ""
-
-                    // Show a toast message
-
                 },
                 enabled = isButtonEnabled,
                 modifier = Modifier

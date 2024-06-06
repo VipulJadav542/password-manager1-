@@ -36,11 +36,6 @@ fun AccountDetails(navController: NavController?, id: String?) {
     val viewModel: AccountViewModel = hiltViewModel()
     var account by remember { mutableStateOf<List<AccountData>>(emptyList()) }
 
-//    val (account, setAccount) = remember { mutableStateOf("") }
-//    val (username, setUsername) = remember { mutableStateOf("") }
-//    val (pin, setPin) = remember { mutableIntStateOf(R.drawable.unpin) }
-
-
     LaunchedEffect(viewModel) {
         val observedaccount = viewModel.getAccountById(id!!.toLong())
         account = listOf(observedaccount)

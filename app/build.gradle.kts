@@ -60,6 +60,7 @@ dependencies {
     //room
     implementation(libs.androidx.room.runtime)
     implementation(libs.firebase.auth)
+//    implementation(libs.androidx.material3.android)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     annotationProcessor (libs.androidx.room.compiler.v240)
@@ -90,8 +91,16 @@ dependencies {
     //for more icons
     implementation(libs.androidx.material.icons.extended.v100rc01)
 
-    implementation(libs.androidx.core.ktx)
+//    implementation(libs.androidx.core.ktx)
 
+
+
+//    implementation(platform(libs.androidx.compose.bom))
+//    implementation(libs.androidx.ui)
+//    implementation(libs.androidx.ui.graphics)
+//    implementation(libs.androidx.ui.tooling)
+//    implementation(libs.androidx.ui.tooling.preview)
+//    implementation(libs.androidx.material3)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

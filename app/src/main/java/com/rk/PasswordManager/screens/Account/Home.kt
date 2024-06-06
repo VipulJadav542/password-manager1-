@@ -21,12 +21,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,8 +55,6 @@ fun Home(navController: NavController, function: (id: Int) -> Unit) {
     var simpleNotes by remember { mutableStateOf<List<AccountData>>(emptyList()) }
 
     // State to manage the visibility of the bottom sheet
-    var isBottomSheetVisible by remember { mutableStateOf(false) }
-
     val bottomSheetState = rememberModalBottomSheetState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -67,10 +65,12 @@ fun Home(navController: NavController, function: (id: Int) -> Unit) {
 
     // Function to toggle the bottom sheet
     val toggleBottomSheet: () -> Unit = {
-        if (bottomSheetState.isVisible) {
-            coroutineScope.launch { bottomSheetState.hide() }
-        } else {
-            coroutineScope.launch { bottomSheetState.show() }
+        coroutineScope.launch {
+            if (bottomSheetState.isVisible) {
+                bottomSheetState.hide()
+            } else {
+                bottomSheetState.show()
+            }
         }
     }
 
@@ -79,65 +79,66 @@ fun Home(navController: NavController, function: (id: Int) -> Unit) {
             simpleNotes = observedAccount
         }
     }
-    LaunchedEffect(isBottomSheetVisible) {
-        if (isBottomSheetVisible) {
-            bottomSheetState.show()
-            isBottomSheetVisible = false
-        }
-    }
 
     MyNoteTheme {
-        BottomSheetScaffold(
-            scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = bottomSheetState),
-
-            sheetContent = {
-                BottomSheetContent(viewModel = viewModel,current)
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = toggleBottomSheet,
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add")
+                }
             },
-            content = {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = toggleBottomSheet,
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Icon(Icons.Filled.Add, contentDescription = "Add")
-                        }
-                    },
-                    topBar = {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text(
-                                text = "Password Manager",
-                                fontSize = 20.sp,
-                                fontStyle = FontStyle.Normal,
-                                fontWeight = FontWeight.ExtraBold,
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier.fillMaxWidth().padding(top = 50.dp, start = 15.dp, bottom = 25.dp)
-                            )
-                            Box(
-                                modifier = Modifier.heightIn(2.dp).background(Color.Black)
-                            )
-                        }
-                    },
-                    floatingActionButtonPosition = FabPosition.End,
-                    content = { paddingValues ->
-                        LazyColumn(
-                            modifier = Modifier.padding(paddingValues).background(Color.White),
-                            content = {
-                                if (simpleNotes.isNotEmpty()) {
-                                    items(simpleNotes) { note ->
-                                        AccountItemList(account = note, function = function)
-                                    }
-                                }
+            topBar = {
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "Password Manager",
+                        fontSize = 20.sp,
+                        fontStyle = FontStyle.Normal,
+                        fontWeight = FontWeight.ExtraBold,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 50.dp, start = 15.dp, bottom = 25.dp)
+                    )
+                    Box(
+                        modifier = Modifier
+                            .heightIn(2.dp)
+                            .background(Color.Black)
+                    )
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            content = { paddingValues ->
+                LazyColumn(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .background(Color.White),
+                    content = {
+                        if (simpleNotes.isNotEmpty()) {
+                            items(simpleNotes) { note ->
+                                AccountItemList(account = note, function = function)
                             }
-                        )
+                        }
                     }
                 )
             }
         )
+
+        // Modal Bottom Sheet
+        if (bottomSheetState.isVisible) {
+            ModalBottomSheet(
+                sheetState = bottomSheetState,
+                onDismissRequest = { coroutineScope.launch { bottomSheetState.hide() } }
+            ) {
+                BottomSheetContent(viewModel = viewModel, current)
+            }
+        }
     }
 }
